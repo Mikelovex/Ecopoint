@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { addDoc, collection } from 'firebase/firestore'
 import { db, storage } from '../../services/Firebase'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
+import { MdOutlineFileDownload } from 'react-icons/md'
 
 import { items } from './items'
 
@@ -120,7 +121,7 @@ const CreatePoint = () => {
 
     useEffect(() => {
         fetchStates()
-    }, [])
+    }, [formik.values.estado])
 
 
     useEffect(() => {
@@ -142,6 +143,11 @@ const CreatePoint = () => {
     }, [imageUrl])
 
 
+    useEffect(() => {
+        console.log('selectedItems', selectedItems)
+        formik.setFieldValue('items', selectedItems.map((selected) => selected))
+    }, [selectedItems])
+
 
     return (
         <Flex flexDirection="column" >
@@ -162,11 +168,14 @@ const CreatePoint = () => {
                                     setFile(e.target.files[0])
                                     uploadImage(e.target.files[0])
                                 }} ref={inputRef} />
-                                <div onClick={() => inputRef.current.click()} style={{ cursor: 'pointer', background: '#f0f0f5', borderRadius: '5px', width: '100%', height: "40px", padding: '8px 20px' }}>
+                                <div onClick={() => inputRef.current.click()} style={{ display: 'flex', textAlign: "center", justifyContent: 'center', cursor: 'pointer', background: '#f0f0f5', borderRadius: '5px', width: '100%', height: "40px", }}>
                                     {file ? (
-                                        <p>{file.name}</p>
+                                        <p style={{ marginTop: '8px' }}>{file.name}</p>
                                     ) : (
-                                        <p>Escolher arquivo</p>
+                                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                            <p style={{ marginRight: '16px' }}>Escolher arquivo</p>
+                                            <MdOutlineFileDownload size={20} />
+                                        </div>
                                     )}
                                 </div>
                             </div>
