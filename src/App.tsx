@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as React from "react"
+import {
+  ChakraProvider, extendTheme,
+} from "@chakra-ui/react"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import { BrowserRouter, Route, Routes } from "react-router-dom"
 
-export default App;
+import Home from "./pages/Home"
+import CreatePoint from "./pages/CreatePoint"
+import ViewPoint from "./pages/ViewPoint"
+
+
+const theme = extendTheme({
+  styles: {
+    global: {
+      body: {
+        bg: '#f0f0f5',
+      }
+    }
+  }
+})
+
+
+export const App = () => (
+  <ChakraProvider theme={theme}>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/new-point" element={<CreatePoint />} />
+        <Route path="/view-point" element={<ViewPoint />} />
+      </Routes>
+    </BrowserRouter>
+  </ChakraProvider>
+)
