@@ -12,7 +12,7 @@ const PointDetail = () => {
     return (
         <Container>
             <Flex width="80%" margin=" 20px auto" flexDirection={'column'}>
-                <Heading mb={'10'} fontSize={'3xl'}>Pontos de coletas disponiveis</Heading>
+                <Heading mb={'10'} fontSize={'3xl'}>Pontos de coletas disponíveis</Heading>
                 <Grid templateColumns='repeat(3, 1fr)' gap={6}>
                     {parsedPoints && parsedPoints.map((point: any) => (
                         <Box
