@@ -1,58 +1,106 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { background, Button, Flex, FormControl, FormLabel, Grid, Input, ListItem, OrderedList, Select, Text } from '@chakra-ui/react'
+import { useEffect, useRef, useState } from 'react'
+import { Button, Flex, FormControl, FormLabel, Grid, Input, ListItem, OrderedList, Select, Text } from '@chakra-ui/react'
 import axios from 'axios'
 import { useFormik } from 'formik'
-import CardButton from '../../components/CardButton'
 import Header from '../../components/Header'
 import { useNavigate } from "react-router-dom";
-import { addDoc, collection } from 'firebase/firestore'
+import { addDoc, collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore'
 import { db, storage } from '../../services/Firebase'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { MdOutlineFileDownload } from 'react-icons/md'
+import { LeafletMouseEvent } from "leaflet";
+import { Map, TileLayer, Marker } from "react-leaflet";
+import leaflet from 'leaflet'
+
+import { MapContainer } from './styles'
 
 import { items } from './items'
 
+import pin from '../../assets/location.png'
+import { useAuth } from '../../hooks/AuthContext'
+
+const mapIcon = leaflet.icon({
+    iconUrl: pin,
+    iconSize: [50, 50],
+    iconAnchor: [25, 50],
+    popupAnchor: [178, 2]
+})
+
+
+interface InitialValuesProps {
+    nome: string | undefined,
+    imagem: string | undefined,
+    endereco: string | undefined,
+    numero: string | undefined,
+    estado: string | undefined,
+    cidade: string | undefined,
+    items: Array<string | undefined>,
+    latitude: number,
+    longitude: number
+}
 
 
 const CreatePoint = () => {
 
     const [states, setStates] = useState([])
-    const [citys, setCitys] = useState<any>([])
+    const [citys, setCitys] = useState<Array<string>>([])
     const [selectedOption, setSelectedOption] = useState(false)
     const [selectedItems, setSelectedItems] = useState<string[]>([])
-    const [imageUrl, setImageUrl] = useState<any>()
+    const [imageUrl, setImageUrl] = useState<string | undefined>()
     const [file, setFile] = useState<any>()
+    const [selectedPosition, setSelectedPosition] = useState<[number, number]>([
+        0,
+        0,
+    ]);
+    const [initialPosition, setInitionPosition] = useState<[number, number]>([
+        0,
+        0,
+    ]);
+
+    const { user } = useAuth()
+
+    const navigate = useNavigate();
 
     const inputRef = useRef<any>(null)
 
     const optionsCollection = collection(db, 'points')
 
-    const navigate = useNavigate();
 
-
-
-    const initialValues = {
+    const initialValues: InitialValuesProps = {
         nome: '',
         imagem: '',
         endereco: '',
         numero: '',
-        estado: '' as any,
+        estado: '',
         cidade: '',
-        items: ['']
+        items: [''],
+        latitude: 0,
+        longitude: 0
     }
 
 
-
     const onSubmit = async (data: any) => {
-        const { nome, imagem, endereco, estado, numero, cidade, items } = data
+        const { nome, imagem, endereco, estado, numero, cidade, items, latitude, longitude } = data
 
         let formated = estado.split(',')
-        console.log('data', data)
 
-        await addDoc(optionsCollection, { nome, imagem, endereco, estado: formated[1], numero, cidade, items })
+        await addDoc(optionsCollection, { nome, imagem, endereco, estado: formated[1], numero, cidade, items, latitude, longitude, userId: user.uid })
+
+        const docRef = doc(db, 'users', `${user.uid}`)
+        const docData = await getDoc(docRef)
+
+        const points = { ...docData.data(), point: [{ nome, imagem, endereco, estado: formated[1], numero, cidade, items, latitude, longitude }] }
+
+        if (user.point.length >= 1) {
+
+            await setDoc(doc(db, "users", user.uid), { ...docData.data(), point: [...user.point, { nome, imagem, endereco, estado: formated[1], numero, cidade, items, latitude, longitude }] })
+        } else {
+
+            await setDoc(doc(db, "users", user.uid), points)
+        }
+
         alert('Sucesso!')
         navigate('/')
-
 
     }
 
@@ -63,11 +111,9 @@ const CreatePoint = () => {
     })
 
 
-
     let stateValue = formik.values.estado
 
     const formatedStateValue = stateValue?.split(',')
-
 
 
     const fetchStates = async () => {
@@ -82,12 +128,10 @@ const CreatePoint = () => {
     }
 
 
-
     const uploadImage = async (file: any,) => {
         if (!file) {
             return;
         }
-        console.log('file', file)
 
         const storageReff = ref(storage, `/images/${new Date().getTime()}-${file.name}`)
         const uploadTask = uploadBytesResumable(storageReff, file)
@@ -118,6 +162,20 @@ const CreatePoint = () => {
         }
     }
 
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition((position) => {
+            const { latitude, longitude } = position.coords;
+            setInitionPosition([latitude, longitude]);
+        });
+    }, []);
+
+
+
+    function handleMapClick(event: LeafletMouseEvent) {
+        const { lat: latidude, lng: longitude } = event.latlng;
+        setSelectedPosition([latidude, longitude]);
+    }
+
 
     useEffect(() => {
         fetchStates()
@@ -129,8 +187,8 @@ const CreatePoint = () => {
     }, [formik.values.estado])
 
 
-
     useEffect(() => {
+        const [latitude, longitude] = selectedPosition
         formik.setValues({
             nome: formik.values.nome,
             cidade: formik.values.cidade,
@@ -138,20 +196,29 @@ const CreatePoint = () => {
             estado: formatedStateValue && formatedStateValue[1],
             imagem: imageUrl,
             numero: formik.values.numero,
-            items: selectedItems.map((selected) => selected)
+            items: selectedItems.map((selected) => selected),
+            latitude: latitude,
+            longitude: longitude
         })
     }, [imageUrl])
 
 
     useEffect(() => {
-        console.log('selectedItems', selectedItems)
         formik.setFieldValue('items', selectedItems.map((selected) => selected))
     }, [selectedItems])
+
+    useEffect(() => {
+        const [latitude, longitude] = selectedPosition
+
+        formik.setFieldValue('latitude', latitude)
+        formik.setFieldValue('longitude', longitude)
+
+    }, [selectedPosition])
 
 
     return (
         <Flex flexDirection="column" >
-            <Header text='voltar para home' link='/' />
+            <Header />
             <Flex background="white" w={[400, 800, 800, 800]} margin="auto" padding={[8, 16, 16, 16]} borderRadius={5} flexDirection="column" >
                 <Text fontSize={["2xl", "4xl", "4xl", "4xl"]} fontWeight="bold" color="#322153">Cadastro de ponto de coleta</Text>
                 <Text marginTop={[5, 10, 10, 10]} fontSize={["large", "2xl", "2xl", "2xl"]} fontWeight="500" color="#322153">Dados da entidade</Text>
@@ -204,6 +271,18 @@ const CreatePoint = () => {
                                 </Select>
                             </div>
                         </Grid>
+
+                        <MapContainer >
+                            <Map center={initialPosition} zoom={15} onClick={handleMapClick}>
+                                <TileLayer
+                                    attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                />
+
+                                <Marker icon={mapIcon} position={selectedPosition} />
+                            </Map>
+                        </MapContainer>
+
                         <Flex alignItems="center" flexDirection={['column', 'row', 'row', 'row']} justifyContent="space-between" marginTop={20}>
                             <Text color="#322153" fontSize="2xl" fontWeight="bold">Items de coleta</Text>
                             <Text color="#322153" as="p">Selecione um ou mais items abaixo</Text>
@@ -227,7 +306,7 @@ const CreatePoint = () => {
                                         flexDirection="column"
                                         textAlign="center"
 
-                                        style={selectedItems.includes(item.nome) ? { background: '#e1faec', border: '2px solid #34cd79' } : {}}
+                                        style={selectedItems.includes(item.nome) ? { background: 'aliceblue', border: '2px solid #90cdf4' } : {}}
                                     >
                                         <img src={item.image} alt={item.nome} />
                                         <Text style={{ pointerEvents: 'none' }} color="#4d4d4d">
@@ -237,7 +316,7 @@ const CreatePoint = () => {
                                 </OrderedList>
                             ))}
                         </Grid>
-                        <Button _hover={{ background: '#2fb86e' }} w="xs" color="#f2f2f2" background="#34cb79" type='submit'>
+                        <Button colorScheme="blue" w="xs" color="#f2f2f2" type='submit'>
                             Cadastrar ponto de coleta
                         </Button>
                     </form>

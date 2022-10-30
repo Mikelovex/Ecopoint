@@ -1,0 +1,461 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home Component deve abrir um modal ao clickar no botão de pesquisa 1`] = `
+<body>
+  <div
+    aria-hidden="true"
+    data-aria-hidden="true"
+    id="chakra-toast-portal"
+  >
+    <ul
+      id="chakra-toast-manager-top"
+      style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column; margin: 0px auto;"
+    />
+    <ul
+      id="chakra-toast-manager-top-left"
+      style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+    />
+    <ul
+      id="chakra-toast-manager-top-right"
+      style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+    />
+    <ul
+      id="chakra-toast-manager-bottom-left"
+      style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+    />
+    <ul
+      id="chakra-toast-manager-bottom"
+      style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column; margin: 0px auto;"
+    />
+    <ul
+      id="chakra-toast-manager-bottom-right"
+      style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+    />
+  </div>
+  <div
+    aria-hidden="true"
+    data-aria-hidden="true"
+  >
+    <div
+      class="css-fqwx7g"
+    >
+      <div
+        class="css-7mc67y"
+      >
+        <img
+          alt="logo"
+          class="chakra-image css-ge7yul"
+          src="logo.svg"
+        />
+        <a
+          class="chakra-link css-15l38qi"
+          href="new-point"
+        >
+          <svg
+            color="#2fb86e"
+            fill="none"
+            height="20"
+            stroke="currentColor"
+            stroke-width="0"
+            style="color: rgb(47, 184, 110); margin-right: 10px;"
+            viewBox="0 0 24 24"
+            width="20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M20 5H8V9H6V3H22V21H6V15H8V19H20V5Z"
+              fill="currentColor"
+            />
+            <path
+              d="M13.0743 16.9498L11.6601 15.5356L14.1957 13H2V11H14.1956L11.6601 8.46451L13.0743 7.05029L18.024 12L13.0743 16.9498Z"
+              fill="currentColor"
+            />
+          </svg>
+            
+          Cadastre um ponto de coleta
+        </a>
+      </div>
+      <div
+        class="css-sa3qsd"
+      >
+        <div
+          class="css-f7lypa"
+        >
+          <p
+            class="chakra-text css-1x8bp0w"
+          >
+            Seu marketplace de coleta de resíduos.
+          </p>
+          <p
+            class="chakra-text css-upeskm"
+          >
+            Ajudamos pessoas a encontrarem pontos de coleta de forma eficiente
+          </p>
+          <button
+            class="chakra-button css-2rpn90"
+            type="button"
+          >
+            <span
+              class="chakra-button__icon css-1wh2kri"
+            >
+              <svg
+                aria-hidden="true"
+                fill="none"
+                focusable="false"
+                height="20"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M20 5H8V9H6V3H22V21H6V15H8V19H20V5Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M13.0743 16.9498L11.6601 15.5356L14.1957 13H2V11H14.1956L11.6601 8.46451L13.0743 7.05029L18.024 12L13.0743 16.9498Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </span>
+            Pesquisar pontos de coleta
+          </button>
+        </div>
+        <div
+          class="css-1bs7oi2"
+        >
+          <img
+            alt=""
+            src="home-background.svg"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="chakra-portal"
+  >
+    <div
+      aria-hidden="true"
+      class="chakra-modal__overlay css-13d1tkw"
+      data-aria-hidden="true"
+      style="opacity: 0;"
+    />
+    <div
+      aria-hidden="true"
+      data-aria-hidden="true"
+      data-focus-guard="true"
+      style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+      tabindex="0"
+    />
+    <div
+      aria-hidden="true"
+      data-aria-hidden="true"
+      data-focus-guard="true"
+      style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+      tabindex="1"
+    />
+    <div
+      data-focus-lock-disabled="false"
+    >
+      <div
+        class="chakra-modal__content-container css-k2m3mz"
+        tabindex="-1"
+      >
+        <section
+          aria-describedby="chakra-modal--body-5"
+          aria-labelledby="chakra-modal--header-5"
+          aria-modal="true"
+          class="chakra-modal__content css-6yiygt"
+          id="chakra-modal-5"
+          role="dialog"
+          style="opacity: 0; transform: scale(0.95) translateZ(0);"
+          tabindex="-1"
+        >
+          <header
+            class="chakra-modal__header css-72fd9l"
+            id="chakra-modal--header-5"
+          >
+            Modal Title
+          </header>
+          <button
+            aria-label="Close"
+            class="chakra-modal__close-btn css-13nquto"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="chakra-icon css-onkibi"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M.439,21.44a1.5,1.5,0,0,0,2.122,2.121L11.823,14.3a.25.25,0,0,1,.354,0l9.262,9.263a1.5,1.5,0,1,0,2.122-2.121L14.3,12.177a.25.25,0,0,1,0-.354l9.263-9.262A1.5,1.5,0,0,0,21.439.44L12.177,9.7a.25.25,0,0,1-.354,0L2.561.44A1.5,1.5,0,0,0,.439,2.561L9.7,11.823a.25.25,0,0,1,0,.354Z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
+          <div
+            class="chakra-modal__body css-0"
+            id="chakra-modal--body-5"
+          >
+            <input
+              class="chakra-input css-m6cbae"
+              placeholder="Busque pelo nome da cidade"
+              value=""
+            />
+          </div>
+          <footer
+            class="chakra-modal__footer css-192qrng"
+          >
+            <button
+              class="chakra-button css-1warrel"
+              type="button"
+            >
+              Buscar ponto de coleta
+            </button>
+          </footer>
+        </section>
+      </div>
+    </div>
+    <div
+      aria-hidden="true"
+      data-aria-hidden="true"
+      data-focus-guard="true"
+      style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+      tabindex="0"
+    />
+  </div>
+</body>
+`;
+
+exports[`Home Component deve conter uma botão de pesquisa no modal 1`] = `
+<body>
+  <div
+    aria-hidden="true"
+    data-aria-hidden="true"
+    id="chakra-toast-portal"
+  >
+    <ul
+      id="chakra-toast-manager-top"
+      style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column; margin: 0px auto;"
+    />
+    <ul
+      id="chakra-toast-manager-top-left"
+      style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+    />
+    <ul
+      id="chakra-toast-manager-top-right"
+      style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+    />
+    <ul
+      id="chakra-toast-manager-bottom-left"
+      style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+    />
+    <ul
+      id="chakra-toast-manager-bottom"
+      style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column; margin: 0px auto;"
+    />
+    <ul
+      id="chakra-toast-manager-bottom-right"
+      style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+    />
+  </div>
+  <div
+    aria-hidden="true"
+    data-aria-hidden="true"
+  >
+    <div
+      class="css-fqwx7g"
+    >
+      <div
+        class="css-7mc67y"
+      >
+        <img
+          alt="logo"
+          class="chakra-image css-ge7yul"
+          src="logo.svg"
+        />
+        <a
+          class="chakra-link css-15l38qi"
+          href="new-point"
+        >
+          <svg
+            color="#2fb86e"
+            fill="none"
+            height="20"
+            stroke="currentColor"
+            stroke-width="0"
+            style="color: rgb(47, 184, 110); margin-right: 10px;"
+            viewBox="0 0 24 24"
+            width="20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M20 5H8V9H6V3H22V21H6V15H8V19H20V5Z"
+              fill="currentColor"
+            />
+            <path
+              d="M13.0743 16.9498L11.6601 15.5356L14.1957 13H2V11H14.1956L11.6601 8.46451L13.0743 7.05029L18.024 12L13.0743 16.9498Z"
+              fill="currentColor"
+            />
+          </svg>
+            
+          Cadastre um ponto de coleta
+        </a>
+      </div>
+      <div
+        class="css-sa3qsd"
+      >
+        <div
+          class="css-f7lypa"
+        >
+          <p
+            class="chakra-text css-1x8bp0w"
+          >
+            Seu marketplace de coleta de resíduos.
+          </p>
+          <p
+            class="chakra-text css-upeskm"
+          >
+            Ajudamos pessoas a encontrarem pontos de coleta de forma eficiente
+          </p>
+          <button
+            class="chakra-button css-2rpn90"
+            type="button"
+          >
+            <span
+              class="chakra-button__icon css-1wh2kri"
+            >
+              <svg
+                aria-hidden="true"
+                fill="none"
+                focusable="false"
+                height="20"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M20 5H8V9H6V3H22V21H6V15H8V19H20V5Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M13.0743 16.9498L11.6601 15.5356L14.1957 13H2V11H14.1956L11.6601 8.46451L13.0743 7.05029L18.024 12L13.0743 16.9498Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </span>
+            Pesquisar pontos de coleta
+          </button>
+        </div>
+        <div
+          class="css-1bs7oi2"
+        >
+          <img
+            alt=""
+            src="home-background.svg"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="chakra-portal"
+  >
+    <div
+      aria-hidden="true"
+      class="chakra-modal__overlay css-13d1tkw"
+      data-aria-hidden="true"
+      style="opacity: 0;"
+    />
+    <div
+      aria-hidden="true"
+      data-aria-hidden="true"
+      data-focus-guard="true"
+      style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+      tabindex="0"
+    />
+    <div
+      aria-hidden="true"
+      data-aria-hidden="true"
+      data-focus-guard="true"
+      style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+      tabindex="1"
+    />
+    <div
+      data-focus-lock-disabled="false"
+    >
+      <div
+        class="chakra-modal__content-container css-k2m3mz"
+        tabindex="-1"
+      >
+        <section
+          aria-describedby="chakra-modal--body-7"
+          aria-labelledby="chakra-modal--header-7"
+          aria-modal="true"
+          class="chakra-modal__content css-6yiygt"
+          id="chakra-modal-7"
+          role="dialog"
+          style="opacity: 0; transform: scale(0.95) translateZ(0);"
+          tabindex="-1"
+        >
+          <header
+            class="chakra-modal__header css-72fd9l"
+            id="chakra-modal--header-7"
+          >
+            Modal Title
+          </header>
+          <button
+            aria-label="Close"
+            class="chakra-modal__close-btn css-13nquto"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="chakra-icon css-onkibi"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M.439,21.44a1.5,1.5,0,0,0,2.122,2.121L11.823,14.3a.25.25,0,0,1,.354,0l9.262,9.263a1.5,1.5,0,1,0,2.122-2.121L14.3,12.177a.25.25,0,0,1,0-.354l9.263-9.262A1.5,1.5,0,0,0,21.439.44L12.177,9.7a.25.25,0,0,1-.354,0L2.561.44A1.5,1.5,0,0,0,.439,2.561L9.7,11.823a.25.25,0,0,1,0,.354Z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
+          <div
+            class="chakra-modal__body css-0"
+            id="chakra-modal--body-7"
+          >
+            <input
+              class="chakra-input css-m6cbae"
+              placeholder="Busque pelo nome da cidade"
+              value=""
+            />
+          </div>
+          <footer
+            class="chakra-modal__footer css-192qrng"
+          >
+            <button
+              class="chakra-button css-1warrel"
+              type="button"
+            >
+              Buscar ponto de coleta
+            </button>
+          </footer>
+        </section>
+      </div>
+    </div>
+    <div
+      aria-hidden="true"
+      data-aria-hidden="true"
+      data-focus-guard="true"
+      style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+      tabindex="0"
+    />
+  </div>
+</body>
+`;
