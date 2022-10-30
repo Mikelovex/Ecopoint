@@ -1,17 +1,11 @@
-import { Box, Flex, Stack, Image, Text, Heading, useColorModeValue, Avatar, Center, HStack, Grid } from '@chakra-ui/react';
-import { collection, getDocs, query, where, } from 'firebase/firestore';
-import React, { useEffect, useState } from 'react'
+import { Box, Flex, Stack, Image, Text, Heading, Grid } from '@chakra-ui/react';
 import Header from '../../components/Header';
-import { useAuth } from '../../hooks/AuthContext';
-import { db } from '../../services/Firebase';
 
 
 function CompanyPoints() {
     const points: any = localStorage.getItem('@my-points')
 
     const parsedPoints = JSON.parse(points)
-
-    console.log('parsedPoints', parsedPoints)
 
     return (
         <>
@@ -69,15 +63,6 @@ function CompanyPoints() {
                                 <Text fontSize="2xl" width={96} fontStyle="italic" color="green.500" fontWeight="bold">{point.items.join(', ')}</Text>
 
                             </Stack>
-                            {/* <Stack mt={6} direction={'row'} spacing={4} align={'center'}>
-                                <Avatar
-                                    src={'https://avatars0.githubusercontent.com/u/1164541?v=4'}
-                                />
-                                <Stack direction={'column'} spacing={0} fontSize={'sm'}>
-                                    <Text fontWeight={600}>Achim Rolle</Text>
-                                    <Text color={'gray.500'}>Feb 08, 2021 · 6min read</Text>
-                                </Stack>
-                            </Stack> */}
                         </Box>
                     ))}
                 </Grid>

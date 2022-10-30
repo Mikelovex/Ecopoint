@@ -1,40 +1,75 @@
-import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import { Container } from './styles';
-import leaflet from 'leaflet'
-import { Link } from 'react-router-dom';
-import pin from '../../assets/location.png'
-import { FiArrowRight } from 'react-icons/fi'
+import { useNavigate } from 'react-router-dom';
+import { Box, Flex, Grid, Heading, Stack, Text, Image } from "@chakra-ui/react";
 
-
-const mapIcon = leaflet.icon({
-    iconUrl: pin,
-    iconSize: [50, 50],
-    iconAnchor: [25, 50],
-    popupAnchor: [178, 2]
-})
 
 const PointDetail = () => {
     const point: any = localStorage.getItem('@points')
-    const parsedPoint = JSON.parse(point)
+    const parsedPoints = JSON.parse(point)
+
+    const navigate = useNavigate();
 
     return (
         <Container>
-            <Map center={[parsedPoint[0].latitude, parsedPoint[0].longitude]} zoom={10}>
-                <TileLayer
-                    attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                {parsedPoint.map((d: any) =>
-                    <Marker key={d.id} icon={mapIcon} position={[d.latitude, d.longitude]}>
-                        <Popup minWidth={240} maxWidth={240} className='map-popup'>
-                            {d.nome}
-                            <Link to={`/point/${d.id}`}>
-                                <FiArrowRight size={32} color="#fff" />
-                            </Link>
-                        </Popup>
-                    </Marker>
-                )}
-            </Map>
+            <Flex width="80%" margin=" 20px auto" flexDirection={'column'}>
+                <Heading mb={'10'} fontSize={'3xl'}>Pontos de coletas disponiveis</Heading>
+                <Grid templateColumns='repeat(3, 1fr)' gap={6}>
+                    {parsedPoints && parsedPoints.map((point: any) => (
+                        <Box
+                            onClick={() => navigate(`/point/${point.id}`)}
+                            key={point.id}
+                            maxW={'445px'}
+                            w={'full'}
+                            boxShadow={'2xl'}
+                            rounded={'md'}
+                            p={6}
+                            overflow={'hidden'}>
+                            <Box
+                                display={'flex'}
+                                justifyContent={'center'}
+                                alignItems={'center'}
+                                objectFit="fill"
+                                bg={'gray.100'}
+                                mt={-6}
+                                mx={-6}
+                                mb={6}
+                            >
+                                <Image
+                                    borderRadius={'5px'}
+                                    height="400px"
+                                    objectFit="scale-down"
+                                    src={point.imagem}
+
+                                />
+                            </Box>
+                            <Stack>
+                                <Text
+                                    color={'green.500'}
+                                    textTransform={'uppercase'}
+                                    fontWeight={800}
+                                    fontSize={'sm'}
+                                    letterSpacing={1.1}>
+                                    {point.nome}
+                                </Text>
+                                <Heading
+                                    fontSize={'2xl'}
+                                    fontFamily={'body'}>
+                                    {point.endereco}
+                                </Heading>
+                                <Text as="p" color="#322153">{point.estado}, {point.cidade}</Text>
+                                <Text
+                                    fontSize={'md'}
+                                    letterSpacing={1.1}>
+                                    Tipos de materiais aceitos:
+                                </Text>
+                                <Text fontSize="2xl" width={96} fontStyle="italic" color="green.500" fontWeight="bold">{point.items.join(', ')}</Text>
+
+                            </Stack>
+                        </Box>
+                    ))}
+                </Grid>
+            </Flex>
+
         </Container>
 
     )

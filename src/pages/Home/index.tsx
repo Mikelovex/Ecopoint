@@ -20,7 +20,6 @@ const Home = () => {
     const getData = async () => {
         const data = await getDocs(pointsCollection)
         const res = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-        console.log('res', res)
         localStorage.setItem('@points', JSON.stringify(res))
     }
 
