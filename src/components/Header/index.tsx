@@ -120,6 +120,15 @@ const Header = () => {
                 </Flex>
             ) : (
                 <Flex alignItems={'center'}>
+                    <Link href='/faq'>
+                        <Button
+                            variant={'ghost'}
+                            size={'sm'}
+                            mr={4}
+                        >
+                            FAQ
+                        </Button>
+                    </Link>
                     <Link href='/json'>
                         <Button
                             variant={'ghost'}
