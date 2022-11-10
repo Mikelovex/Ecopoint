@@ -13,6 +13,10 @@ import SignUp from "./pages/SignUp"
 import { AuthContextProvider } from "./hooks/AuthContext"
 import Profile from "./pages/Profile"
 import CompanyPoints from "./pages/CompanyPoints"
+import EditPoint from "./pages/EditPoint"
+import Json from "./pages/Json"
+import XML from "./pages/XML"
+import FAQ from "./pages/FAQ"
 
 
 const theme = extendTheme({
@@ -34,10 +38,14 @@ export const App = () => (
           <Route path="/new-point" element={<CreatePoint />} />
           <Route path="/view-points" element={<PointDetail />} />
           <Route path="/point/:id" element={<Point />} />
+          <Route path="/edit/point/:id" element={<EditPoint />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/company-points" element={<CompanyPoints />} />
+          <Route path="/json" element={<Json />} />
+          <Route path="/xml" element={<XML />} />
+          <Route path="/faq" element={<FAQ />} />
         </Routes>
       </BrowserRouter>
     </AuthContextProvider>

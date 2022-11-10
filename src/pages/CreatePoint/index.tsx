@@ -36,7 +36,9 @@ interface InitialValuesProps {
     cidade: string | undefined,
     items: Array<string | undefined>,
     latitude: number,
-    longitude: number
+    longitude: number,
+    horarioInicio: string,
+    horarioFim: string,
 }
 
 
@@ -75,25 +77,27 @@ const CreatePoint = () => {
         cidade: '',
         items: [''],
         latitude: 0,
-        longitude: 0
+        longitude: 0,
+        horarioInicio: '',
+        horarioFim: ''
     }
 
 
     const onSubmit = async (data: any) => {
-        const { nome, imagem, endereco, estado, numero, cidade, items, latitude, longitude } = data
+        const { nome, imagem, endereco, estado, numero, cidade, items, latitude, longitude, horarioInicio, horarioFim } = data
 
         let formated = estado.split(',')
 
-        await addDoc(optionsCollection, { nome, imagem, endereco, estado: formated[1], numero, cidade, items, latitude, longitude, userId: user.uid })
+        await addDoc(optionsCollection, { nome, imagem, endereco, estado: formated[1].toLowerCase(), numero, cidade, items, latitude, longitude, horarioInicio, horarioFim, userId: user.uid })
 
         const docRef = doc(db, 'users', `${user.uid}`)
         const docData = await getDoc(docRef)
 
-        const points = { ...docData.data(), point: [{ nome, imagem, endereco, estado: formated[1], numero, cidade, items, latitude, longitude }] }
+        const points = { ...docData.data(), point: [{ nome, imagem, endereco, estado: formated[1].toLowerCase(), numero, cidade, items, latitude, longitude, horarioInicio, horarioFim }] }
 
         if (user.point.length >= 1) {
 
-            await setDoc(doc(db, "users", user.uid), { ...docData.data(), point: [...user.point, { nome, imagem, endereco, estado: formated[1], numero, cidade, items, latitude, longitude }] })
+            await setDoc(doc(db, "users", user.uid), { ...docData.data(), point: [...user.point, { nome, imagem, endereco, estado: formated[1].toLowerCase(), numero, cidade, items, latitude, longitude, horarioInicio, horarioFim }] })
         } else {
 
             await setDoc(doc(db, "users", user.uid), points)
@@ -101,6 +105,7 @@ const CreatePoint = () => {
 
         alert('Sucesso!')
         navigate('/')
+        console.log('data', data)
 
     }
 
@@ -198,7 +203,10 @@ const CreatePoint = () => {
             numero: formik.values.numero,
             items: selectedItems.map((selected) => selected),
             latitude: latitude,
-            longitude: longitude
+            longitude: longitude,
+            horarioInicio: formik.values.horarioInicio,
+            horarioFim: formik.values.horarioFim
+
         })
     }, [imageUrl])
 
@@ -225,11 +233,11 @@ const CreatePoint = () => {
                 <FormControl marginTop={8}>
                     <form onSubmit={formik.handleSubmit}>
                         <Grid gridTemplateColumns={["1fr ", "1fr 1fr", "1fr 1fr", "1fr 1fr"]} gridTemplateRows="1fr" rowGap={8} columnGap={8}>
-                            <div>
+                            <FormControl isRequired>
                                 <FormLabel htmlFor='nome' color="#4d4d4d">Nome da entidade</FormLabel>
                                 <Input id='nome' type='text' background="#f0f0f5" color="#4d4d4d" onChange={formik.handleChange} value={formik.values.nome} />
-                            </div>
-                            <div>
+                            </FormControl>
+                            <FormControl isRequired>
                                 <FormLabel htmlFor='imagem' color="#4d4d4d">Imagem da entidade</FormLabel>
                                 <Input id='imagem' display="none" type='file' background="#f0f0f5" color="#4d4d4d" onChange={(e: any) => {
                                     setFile(e.target.files[0])
@@ -245,31 +253,39 @@ const CreatePoint = () => {
                                         </div>
                                     )}
                                 </div>
-                            </div>
-                            <div>
+                            </FormControl>
+                            <FormControl isRequired>
                                 <FormLabel htmlFor='endereco' color="#4d4d4d">Endereço</FormLabel>
                                 <Input id='endereco' type='text' background="#f0f0f5" color="#4d4d4d" onChange={formik.handleChange} value={formik.values.endereco} />
-                            </div>
-                            <div>
+                            </FormControl>
+                            <FormControl isRequired>
                                 <FormLabel htmlFor='numero' color="#4d4d4d">Numero/Complemento</FormLabel>
                                 <Input id='numero' type='text' background="#f0f0f5" color="#4d4d4d" onChange={formik.handleChange} value={formik.values.numero} />
-                            </div>
-                            <div>
+                            </FormControl>
+                            <FormControl isRequired>
                                 <FormLabel htmlFor='estado' color="#4d4d4d">Estado</FormLabel>
                                 <Select __css={{ background: 'white' }} placeholder='Escolha um estado' id='estado' background="#f0f0f5" color="#4d4d4d" value={formik.values.estado} onChange={formik.handleChange} >
                                     {states.map((state: any, index) => (
                                         <option key={index} id='estado' style={{ background: 'white' }} color="#4d4d4d" value={[state.sigla, state.nome]}>{state.nome}</option>
                                     ))}
                                 </Select>
-                            </div>
-                            <div>
+                            </FormControl>
+                            <FormControl isRequired>
                                 <FormLabel htmlFor='cidade' color="#4d4d4d">Cidade</FormLabel>
                                 <Select __css={{ background: 'white' }} placeholder='Escolha uma cidade' id='cidade' background="#f0f0f5" color="#4d4d4d" value={formik.values.cidade} onChange={formik.handleChange} >
                                     {citys.map((city: any, index: number) => (
                                         <option key={index} id='cidade' style={{ background: 'white' }} color="#4d4d4d" value={city.nome}>{city.nome}</option>
                                     ))}
                                 </Select>
-                            </div>
+                            </FormControl>
+                            <FormControl isRequired>
+                                <FormLabel htmlFor='horarioInicio' color="#4d4d4d">Horário de abertura</FormLabel>
+                                <Input id='horarioInicio' type='time' background="#f0f0f5" color="#4d4d4d" onChange={formik.handleChange} value={formik.values.horarioInicio} />
+                            </FormControl>
+                            <FormControl isRequired>
+                                <FormLabel htmlFor='horarioFim' color="#4d4d4d">Horário de fechamento</FormLabel>
+                                <Input id='horarioFim' type='time' background="#f0f0f5" color="#4d4d4d" onChange={formik.handleChange} value={formik.values.horarioFim} />
+                            </FormControl>
                         </Grid>
 
                         <MapContainer >
@@ -289,31 +305,33 @@ const CreatePoint = () => {
                         </Flex>
                         <Grid gridTemplateColumns={["1fr 1fr", "1fr 1fr 1fr", "1fr 1fr 1fr", "1fr 1fr 1fr"]} gridTemplateRows="1fr 1fr" rowGap={[4, 8, 8, 8]} columnGap={[0, 8, 8, 8]} marginTop={8} marginBottom={24}>
                             {items.map((item: any, index) => (
-                                <OrderedList key={index}>
-                                    <ListItem
-                                        key={item.id}
-                                        onClick={() => {
-                                            setSelectedOption(!selectedOption)
-                                            handleSelectItem(item.nome)
-                                        }}
-                                        w={["140px", "180px", "180px", "180px"]}
-                                        h="160px"
-                                        background="#f5f5f5"
-                                        borderRadius={5}
-                                        alignItems="center"
-                                        justifyContent="center"
-                                        display="flex"
-                                        flexDirection="column"
-                                        textAlign="center"
+                                <FormControl isRequired>
+                                    <OrderedList key={index}>
+                                        <ListItem
+                                            key={item.id}
+                                            onClick={() => {
+                                                setSelectedOption(!selectedOption)
+                                                handleSelectItem(item.nome)
+                                            }}
+                                            w={["140px", "180px", "180px", "180px"]}
+                                            h="160px"
+                                            background="#f5f5f5"
+                                            borderRadius={5}
+                                            alignItems="center"
+                                            justifyContent="center"
+                                            display="flex"
+                                            flexDirection="column"
+                                            textAlign="center"
 
-                                        style={selectedItems.includes(item.nome) ? { background: 'aliceblue', border: '2px solid #90cdf4' } : {}}
-                                    >
-                                        <img src={item.image} alt={item.nome} />
-                                        <Text style={{ pointerEvents: 'none' }} color="#4d4d4d">
-                                            {item.nome}
-                                        </Text>
-                                    </ListItem>
-                                </OrderedList>
+                                            style={selectedItems.includes(item.nome) ? { background: 'aliceblue', border: '2px solid #90cdf4' } : {}}
+                                        >
+                                            <img src={item.image} alt={item.nome} />
+                                            <Text style={{ pointerEvents: 'none' }} color="#4d4d4d">
+                                                {item.nome}
+                                            </Text>
+                                        </ListItem>
+                                    </OrderedList>
+                                </FormControl>
                             ))}
                         </Grid>
                         <Button colorScheme="blue" w="xs" color="#f2f2f2" type='submit'>

@@ -25,10 +25,7 @@ const Header = () => {
 
 
     const handleLogOut = () => {
-
         logOut()
-        navigate('/sign-in')
-
     }
 
 
@@ -39,13 +36,42 @@ const Header = () => {
         }, 1000);
     }
 
+    console.log('user', user)
+
     return (
         <Flex width="80%" height={20} margin=" 20px auto" justifyContent="space-between" alignItems={["center", "normal", "normal", "normal"]}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: "pointer" }} onClick={() => navigate('/')}>
                 <Image width="40px" height="40px" src={Logo} alt="logo" /><h1 style={{ fontSize: '26px', fontWeight: 'bold', color: "#322153" }}>Ecopoint</h1>
             </div>
             {Object.keys(user).length > 0 ? (
                 <Flex alignItems={'center'}>
+                    <Link href='/faq'>
+                        <Button
+                            variant={'ghost'}
+                            size={'sm'}
+                            mr={4}
+                        >
+                            FAQ
+                        </Button>
+                    </Link>
+                    <Link href='/json'>
+                        <Button
+                            variant={'ghost'}
+                            size={'sm'}
+                            mr={4}
+                        >
+                            JSON
+                        </Button>
+                    </Link>
+                    <Link href='/xml'>
+                        <Button
+                            variant={'ghost'}
+                            size={'sm'}
+                            mr={4}
+                        >
+                            XML
+                        </Button>
+                    </Link>
                     <Button
                         variant={'solid'}
                         colorScheme={'blue'}
@@ -56,6 +82,7 @@ const Header = () => {
                             Novo ponto de coleta
                         </Link>
                     </Button>
+
 
                     <Menu>
                         <MenuButton
@@ -93,6 +120,25 @@ const Header = () => {
                 </Flex>
             ) : (
                 <Flex alignItems={'center'}>
+                    <Link href='/json'>
+                        <Button
+                            variant={'ghost'}
+                            size={'sm'}
+                            mr={4}
+                        >
+                            JSON
+                        </Button>
+                    </Link>
+                    <Link href='/xml'>
+                        <Button
+                            variant={'ghost'}
+                            size={'sm'}
+                            mr={4}
+                        >
+                            XML
+                        </Button>
+                    </Link>
+
                     <Link _hover={{ textDecorationLine: 'none' }} href='/sign-in'>
                         <Button
                             variant={'ghost'}

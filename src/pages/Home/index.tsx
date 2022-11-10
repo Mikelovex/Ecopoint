@@ -1,5 +1,5 @@
-import { Button, Flex, Text, useDisclosure } from '@chakra-ui/react';
-import { useEffect } from 'react'
+import { Button, Flex, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure } from '@chakra-ui/react';
+import { useEffect, useState } from 'react'
 import Header from '../../components/Header';
 
 import { CgEnter } from 'react-icons/cg'
@@ -11,11 +11,11 @@ import { db } from '../../services/Firebase';
 import { useAuth } from '../../hooks/AuthContext';
 
 const Home = () => {
-    const { onOpen, } = useDisclosure()
-    const { user } = useAuth()
-    const navigate = useNavigate()
 
-    const pointsCollection = query(collection(db, 'points'), where("estado", "==", `São Paulo`))
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const [inputValue, setInputValue] = useState('')
+
+    const pointsCollection = query(collection(db, 'points'), where("estado", "==", `${inputValue}`))
 
     const getData = async () => {
         const data = await getDocs(pointsCollection)
@@ -24,15 +24,7 @@ const Home = () => {
     }
 
 
-    useEffect(() => {
-        if (Object.keys(user).length > 0) {
-            const docRef = doc(db, 'users', `${user.uid}`)
-            getDoc(docRef).then((doc) => {
-                localStorage.removeItem('@user')
-                localStorage.setItem("@user", JSON.stringify(doc.data()))
-            })
-        }
-    }, [])
+    const navigate = useNavigate()
 
     return (
         <Flex flexDirection="column" height="100vh" justifyContent="center" >
@@ -42,16 +34,38 @@ const Home = () => {
                     <Text textAlign={['initial', 'center', 'left', 'left']} fontSize={['4xl', '3xl', '4xl', "6xl"]} fontWeight="600" color="#322153">Encontrar pontos de coleta nunca foi tão fácil.</Text>
                     <Text fontSize={["large", "2xl", "2xl", "2xl"]} color="#322153">Ajudamos pessoas a encontrarem pontos de coleta de forma eficiente</Text>
                     <Button colorScheme="blue" leftIcon={<CgEnter size={20} />} maxWidth={80} size="lg" color="white" onClick={() => {
-                        localStorage.clear()
+                        localStorage.removeItem('@points')
                         onOpen()
-                        getData()
-                        setTimeout(() => {
-                            navigate('/view-points')
-                        }, 2000);
                     }}>
                         Pesquisar pontos de coleta
                     </Button>
+
+                    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+                        <ModalOverlay />
+                        <ModalContent>
+                            <ModalHeader>Modal Title</ModalHeader>
+                            <ModalCloseButton _focus={{ border: 'none' }} />
+                            <ModalBody>
+                                <Input colorScheme={"blue"} placeholder='Busque pelo nome da cidade' value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+                            </ModalBody>
+
+                            <ModalFooter>
+                                <Button colorScheme={"blue"} mr={3} onClick={() => {
+                                    getData()
+                                    onClose()
+                                    setTimeout(() => {
+                                        navigate('/view-points')
+                                    }, 2000);
+                                }}>
+                                    Buscar ponto de coleta
+                                </Button>
+                            </ModalFooter>
+                        </ModalContent>
+                    </Modal>
+
                 </Flex>
+
+
                 <Flex w={['0vw', '50vw', '70vw', '100vw']}>
                     <img src={BackgroundImage} alt="" />
                 </Flex>

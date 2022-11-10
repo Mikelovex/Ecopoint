@@ -41,9 +41,14 @@ const Point = () => {
                             <Flex>
                                 <Flex flexDirection="column" gap={2}>
                                     <Text fontSize="4xl" fontStyle="italic" color="#322153" fontWeight="bold">{pointData.nome}</Text>
+                                    <Text>Tipos de materiais aceitos: </Text>
                                     <Text fontSize="2xl" width={96} fontStyle="italic" color="#34cb79" fontWeight="bold">{pointData.items.join(', ')}</Text>
-                                    <Text as="p" color="#322153">{pointData.estado}, {pointData.cidade}</Text>
-                                    <Text as="p" color="#322153">{pointData.endereco}</Text>
+                                    <Text as="p" color="#322153" fontWeight={"bold"}>Endereço: <span style={{ fontWeight: "normal" }}>{pointData.endereco}</span></Text>
+                                    {pointData.horarioInicio && (
+                                        <Text fontWeight={"bold"}>Funcionamento: <span style={{ fontWeight: 'normal' }}>{pointData.horarioInicio} as {pointData.horarioFim}</span></Text>
+                                    )}
+                                    <Text fontWeight={"bold"} as="p" color="#322153">{pointData.estado}, {pointData.cidade}</Text>
+
                                 </Flex>
                             </Flex>
                             <div className="map-container">

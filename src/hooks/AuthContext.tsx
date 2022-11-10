@@ -133,11 +133,8 @@ export const AuthContextProvider: React.FC = ({ children }) => {
 
     const logOut = () => {
         signOut(auth)
-
-        localStorage.removeItem('@user')
-
+        localStorage.clear()
         setUser({} as any)
-
     }
 
     useEffect(() => {
@@ -146,11 +143,6 @@ export const AuthContextProvider: React.FC = ({ children }) => {
             const docRef = doc(db, 'users', `${user.user.uid}`)
             const docData = await getDoc(docRef)
 
-            if (docData) {
-                localStorage.removeItem('@user')
-                localStorage.setItem("@user", JSON.stringify(docData.data()))
-            }
-
             setUser(docData.data())
 
 
@@ -158,7 +150,7 @@ export const AuthContextProvider: React.FC = ({ children }) => {
         return () => {
             unsubscribe();
         };
-    }, []);
+    }, [logOut]);
 
     return (
         <AuthContext.Provider value={{ signIn, signUp, editUser, editAvatar, logOut, user }}>
